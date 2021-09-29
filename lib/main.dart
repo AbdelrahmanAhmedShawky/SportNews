@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sport_news_app/di/injector.dart' as di;
+import 'package:sport_news_app/utility/const.dart';
 
 import 'bloc/bloc_provider.dart';
 import 'bloc/post_bloc.dart';
@@ -17,14 +18,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: BlocProvider<PostBloc>(
-        bloc: getIt<PostBloc>(),
-        child: Home(),
+      debugShowCheckedModeBanner: false,
+      title: Constants.appName,
+      theme: Constants.lightTheme,
+      home: Directionality(
+        // add this
+        textDirection: TextDirection.rtl,
+        child: BlocProvider<PostBloc>(
+          bloc: getIt<PostBloc>(),
+          child: Home(),
+        ),
       ),
     );
   }
