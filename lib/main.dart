@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sport_news_app/di/injector.dart' as di;
+import 'package:sport_news_app/ui/home.dart';
 import 'package:sport_news_app/utility/const.dart';
 
 import 'bloc/bloc_provider.dart';
 import 'bloc/post_bloc.dart';
 import 'di/injector.dart';
-import 'ui/home.dart';
 
 void main() async {
   await di.init();

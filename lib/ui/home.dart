@@ -4,29 +4,42 @@ import 'package:sport_news_app/bloc/post_bloc.dart';
 import 'package:sport_news_app/data/model/news_model.dart';
 import 'package:sport_news_app/di/injector.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
+  const Home({Key key}) : super(key: key);
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-      ),
-      child: Scaffold(
-          body: Container(
-        child: ListView(
-          children: [
-            buildHeaderText(context),
-            SizedBox(height: 8.0),
-            _buildNewList(context),
-            SizedBox(height: 20.0),
-          ],
-        ),
-      )),
+    return Scaffold(
+      body: buildBody(),
     );
   }
 
-  buildHeaderText(BuildContext context) {
-    return Container(
+  Widget buildBody() {
+    return Column(
+      children: [
+        _buildHeaderText(context),
+        SizedBox(height: 8.0),
+        _buildNewList(context),
+        SizedBox(height: 8.0),
+      ],
+    );
+  }
+
+  Widget _buildHeaderText(BuildContext context) {
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: 130.0,
       child: Image.asset(
@@ -37,35 +50,36 @@ class Home extends StatelessWidget {
   }
 
   Widget _buildNewList(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
-      child: StreamBuilder(
-        stream: getIt<PostBloc>().postSubject.stream,
-        builder: (context, AsyncSnapshot<List<NewsDataModel>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.connectionState == ConnectionState.active) {
-            if (snapshot.hasData) {
-              if (snapshot.data.length > 0)
-                return ListView.builder(
-                    primary: false,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (context, index) =>
-                        _getPostWidgets(snapshot.data[index]));
-              else
+    return Expanded(
+      child: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: StreamBuilder(
+          stream: getIt<PostBloc>().postSubject.stream,
+          builder: (context, AsyncSnapshot<List<NewsDataModel>> snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.connectionState == ConnectionState.active) {
+              if (snapshot.hasData) {
+                if (snapshot.data.length > 0)
+                  return ListView.builder(
+                      primary: false,
+                      shrinkWrap: true,
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (context, index) =>
+                          _getPostWidgets(snapshot.data[index]));
+                else
+                  return _noDataFound();
+              } else {
                 return _noDataFound();
+              }
+            } else if (snapshot.connectionState == ConnectionState.none) {
+              return _noDataFound();
             } else {
               return _noDataFound();
             }
-          } else if (snapshot.connectionState == ConnectionState.none) {
-            return _noDataFound();
-          } else {
-            return _noDataFound();
-          }
-        },
+          },
+        ),
       ),
     );
   }
@@ -92,16 +106,13 @@ class Home extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    bottom: 1,
+                    bottom: 0,
                     right: 1,
                     child: Container(
-                      height: 25,
-                      width: 25,
-                      child: Image.asset(
-                        'Group 544.png',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                        height: 25,
+                        width: 25,
+                        color: Colors.indigo,
+                        child: Image.asset('Group544.png')),
                   ),
                 ],
               ),
