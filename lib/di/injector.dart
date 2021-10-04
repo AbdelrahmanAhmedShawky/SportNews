@@ -14,7 +14,7 @@ GetIt getIt = GetIt.instance;
 Future<void> init() async {
   getIt.registerLazySingleton(() => PostBloc(getIt()));
   getIt.registerLazySingleton<NewsRepository>(
-    () => NewsRepository(getIt(), getIt(), getIt()),
+    () => NewsRepository(getIt(), getIt()),
   );
   getIt
       .registerLazySingleton<RemoteDataSource>(() => RemoteDataSource(getIt()));

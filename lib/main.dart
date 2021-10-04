@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sport_news_app/di/injector.dart' as di;
-import 'package:sport_news_app/ui/home.dart';
+import 'package:sport_news_app/ui/mainScreen.dart';
 import 'package:sport_news_app/utility/const.dart';
 
 import 'bloc/bloc_provider.dart';
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         textDirection: TextDirection.rtl,
         child: BlocProvider<PostBloc>(
           bloc: getIt<PostBloc>(),
-          child: Home(),
+          child: MainSreen(),
         ),
       ),
     );
