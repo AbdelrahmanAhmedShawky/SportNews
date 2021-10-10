@@ -11,9 +11,9 @@ class _MainScreenState extends State<MainSreen> {
   int _page = 0;
 
   List icons = [
-    Icons.search,
-    Icons.local_pizza,
-    Icons.brightness_1,
+    "assets/images/Glyph.png",
+    "assets/images/Glyph.png",
+    "assets/images/Glyph.png",
   ];
 
   @override
@@ -62,10 +62,7 @@ class _MainScreenState extends State<MainSreen> {
 
   buildTabIcon(int index) {
     return IconButton(
-      icon: Icon(
-        icons[index],
-        size: 24.0,
-      ),
+      icon: Image.asset(icons[index]),
       color: _page == index
           ? Theme.of(context).accentColor
           : Theme.of(context).textTheme.caption.color,

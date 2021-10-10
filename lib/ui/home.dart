@@ -27,7 +27,7 @@ class Home extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: 130.0,
       child: Image.asset(
-        "images/Group544.png",
+        "assets/images/Group544.png",
         fit: BoxFit.cover,
       ),
     );
@@ -96,7 +96,7 @@ class Home extends StatelessWidget {
                         height: 25,
                         width: 25,
                         color: Colors.indigo,
-                        child: Image.asset('Group544.png')),
+                        child: Image.asset('assets/images/Group544.png')),
                   ),
                 ],
               ),
