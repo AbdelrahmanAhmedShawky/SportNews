@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sport_news_app/bloc/bloc_provider.dart';
+import 'package:sport_news_app/bloc/post_bloc.dart';
+import 'package:sport_news_app/di/injector.dart';
 import 'package:sport_news_app/ui/home.dart';
 
 class MainSreen extends StatefulWidget {
@@ -12,18 +15,24 @@ class _MainScreenState extends State<MainSreen> {
 
   List icons = [
     "assets/images/Glyph.png",
-    "assets/images/Glyph.png",
-    "assets/images/Glyph.png",
+    "assets/images/Glyph4.png",
+    "assets/images/Glyph5.png",
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PageView(
-        physics: NeverScrollableScrollPhysics(),
-        controller: _pageController,
-        onPageChanged: onPageChange,
-        children: List.generate(3, (index) => Home()),
+      body: BlocProvider<PostBloc>(
+        bloc: getIt<PostBloc>(),
+        child: PageView(
+          physics: NeverScrollableScrollPhysics(),
+          controller: _pageController,
+          onPageChanged: onPageChange,
+          children: List.generate(
+            3,
+            (index) => Home(),
+          ),
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
         child: Row(
@@ -37,7 +46,7 @@ class _MainScreenState extends State<MainSreen> {
             SizedBox(width: 7),
           ],
         ),
-        color: Theme.of(context).primaryColor,
+        color: Color(0xff11172f),
       ),
     );
   }
@@ -62,7 +71,10 @@ class _MainScreenState extends State<MainSreen> {
 
   buildTabIcon(int index) {
     return IconButton(
-      icon: Image.asset(icons[index]),
+      icon: Image.asset(
+        icons[index],
+        color: _page == index ? Colors.white : Colors.grey,
+      ),
       color: _page == index
           ? Theme.of(context).accentColor
           : Theme.of(context).textTheme.caption.color,
